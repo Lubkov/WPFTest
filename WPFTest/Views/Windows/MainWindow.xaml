@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTest"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:cmd="clr-namespace:WPFTest.Infrastructure.Commands"
         xmlns:vm="clr-namespace:WPFTest.ViewModels"
         mc:Ignorable="d"
@@ -45,7 +46,13 @@
             </StatusBarItem>
         </StatusBar>
         <TabControl>
-            <TabItem Header="Вкладка 1">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical">
+                        <fa:ImageAwesome Icon="FilePictureOutline" Height="32" Margin="2" Foreground="DarkRed"/>
+                        <TextBlock Text="Вкладка 1" Margin="5 2 5 2"/>                        
+                    </StackPanel>
+                </TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200*"/>
@@ -70,7 +77,30 @@
                     </Ellipse>
                 </Grid>
             </TabItem>
-            <TabItem Header="Вкладка 2"></TabItem>
+            <TabItem>                
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical">                        
+                        <fa:ImageAwesome Icon="CreditCard" Height="32" Margin="2" Foreground="DarkRed"/>
+                        <TextBlock Text="Список карт" Margin="5 2 5 2"/>
+                    </StackPanel>
+                </TabItem.Header>                
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical">
+                        <fa:ImageAwesome Icon="Desktop" Height="32" Margin="2" Foreground="DarkRed"/>
+                        <TextBlock Text="Станции R-Keeper" Margin="5 2 5 2"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical">
+                        <fa:ImageAwesome Icon="Vcard" Height="32" Margin="2" Foreground="DarkRed"/>
+                        <TextBlock Text="Пользователи системы" Margin="5 2 5 2"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
