@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
+using System.Windows.Input;
+using WPFTest.Infrastructure.Commands;
 using WPFTest.ViewModels.Base;
 
 namespace WPFTest.ViewModels
@@ -33,5 +36,30 @@ namespace WPFTest.ViewModels
             set => Set(ref _status, value);
         }
         #endregion
+
+        #region Команды
+
+        #region CloseApplicationCommand
+        public ICommand CloseApplicationCommand { get; }
+
+        private bool CanCloseApplicationCommandExecute(object p) => true;
+
+        private void OnCloseApplicationCommandExecuted(object p)
+        {
+            Application.Current.Shutdown();
+        }
+        #endregion
+
+        #endregion
+
+        public MainWindowViewModel()
+        {
+            #region Создание команд
+
+            CloseApplicationCommand = new ActionCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+
+            #endregion
+
+        }
     }
 }
