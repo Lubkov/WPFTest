@@ -10,8 +10,8 @@
         xmlns:model="clr-namespace:WPFTest.Models"
         mc:Ignorable="d"
         Title="{Binding Title}" 
-        Height="450" 
-        Width="800" >
+        Height="675" 
+        Width="1200" >
     <Window.DataContext>
         <vm:MainWindowViewModel/>           
     </Window.DataContext>
@@ -61,31 +61,58 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <GroupBox Grid.Column="0" Header="Группы карт">
-                        <ListBox ItemsSource="{Binding Groups}"
-                                 DisplayMemberPath="Name" 
-                                 SelectedItem="{Binding SelectedGroup}"
-                                 SelectedIndex="0"/>
+                    <GroupBox Grid.Column="0" Header="Группы карт">                        
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Width="32" Height="32" Margin="0" Padding="0" Command="{Binding CreateGroupCommand}">
+                                    <fa:ImageAwesome Icon="Plus" Height="24" Margin="2" Foreground="White"/>                                                                        
+                                </Button>
+                                <Button Width="32" Height="32" Margin="10,0,0,0" Padding="0" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding SelectedGroup}">
+                                    <fa:ImageAwesome Icon="Remove" Height="24" Margin="2" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+                            <ListBox ItemsSource="{Binding Groups}" SelectedIndex="0"                              
+                                     SelectedItem="{Binding SelectedGroup}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="model:Group">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Customers.Count, StringFormat=({0})}" Margin="10 0 0 0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>    
+                        </StackPanel>                        
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Список карт', TargetNullValue='Группа не выбрана'}">
                         <DataGrid ItemsSource="{Binding SelectedGroup.Customers}" 
                                   AutoGenerateColumns="False"
-                                  IsReadOnly="True"
+                                  CanUserAddRows="False"
                                   GridLinesVisibility="Vertical"
                                   AlternatingRowBackground="LightBlue">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
-                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" IsReadOnly="True"/>
                                 <!--<DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthdate, StringFormat='dd.MM.yyyy'}"/>-->
-                                <DataGridTemplateColumn>
-                                    <DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn Header="Дата рождения">
+                                    <!--<DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate DataType="model:Customer">
                                             <DatePicker SelectedDate="{Binding Birthdate}"/>
                                         </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>-->
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="model:Customer">
+                                            <TextBlock Text="{Binding Birthdate, StringFormat='dd:MM:yyyy'}"/>
+                                        </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate DataType="model:Customer">
+                                            <DatePicker SelectedDate="{Binding Birthdate}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Номер телефона" Binding="{Binding PhoneNum}"/>
+                                <DataGridTextColumn Header="Номер телефона" Binding="{Binding PhoneNum}" IsReadOnly="True"/>
                                 <!--<DataGridTextColumn Header="Группа" Binding="{Binding DataContext.SelectedGroup.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
                             </DataGrid.Columns>
                             

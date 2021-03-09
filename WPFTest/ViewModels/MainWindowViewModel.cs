@@ -73,6 +73,31 @@ namespace WPFTest.ViewModels
         }
         #endregion
 
+        public ICommand CreateGroupCommand { get; }
+
+        public bool CanCreateGroupCommandExecute(object p) => true;
+        public void OnCreateGroupCommandExecuted(object p)
+        {
+            var group = new Group()
+            {
+                Name = "Новая группа",
+                Customers = new ObservableCollection<Customer>()
+            };
+
+            Groups.Add(group);
+        }
+
+        #region DeleteGroupCommand
+        public ICommand DeleteGroupCommand { get; }
+        public bool CanDeleteGroupCommandExecute(object p) => p is Group group && Groups.Contains(group);
+        public void OnDeleteGroupCommandExecuted(object p)
+        {
+            if (!(p is Group group)) return;
+
+            Groups.Remove(group);
+        }
+        #endregion
+
         #endregion
 
         public MainWindowViewModel()
@@ -80,17 +105,21 @@ namespace WPFTest.ViewModels
             #region Создание команд
 
             CloseApplicationCommand = new ActionCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+            CreateGroupCommand = new ActionCommand(OnCreateGroupCommandExecuted, CanCreateGroupCommandExecute);
+            DeleteGroupCommand = new ActionCommand(OnDeleteGroupCommandExecuted, CanDeleteGroupCommandExecute);
 
             #endregion
 
             var index = 1;
-            var customers = Enumerable.Range(1, 10).Select(i => new Customer 
+            var customers = Enumerable.Range(1, 10).Select(i => new Customer() 
             {
                 Name = $"Name {index}",
                 Surname = $"Surname {index}",
                 Patronymic = $"Patronymic {index++}",
                 Birthdate = DateTime.Now,
-                PhoneNum = "(099) 235-62-66"
+                PhoneNum = "(099) 235-62-66",
+                IsSeize = false,
+                isLocked = false
             });
 
             var groups = Enumerable.Range(1, 20).Select(i => new Group()

@@ -13,6 +13,8 @@ namespace WPFTest.Models
         public string Patronymic { get; set; }
         public DateTime Birthdate { get; set; }
         public string PhoneNum { get; set; }
+        public bool IsSeize { get; set; }
+        public bool isLocked { get; set; }
 
     }
 
