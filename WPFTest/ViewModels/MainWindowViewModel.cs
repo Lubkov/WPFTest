@@ -19,7 +19,7 @@ namespace WPFTest.ViewModels
 
         #region Выбранная группа карт
 
-        public Group _SelectedGroup;
+        private Group _SelectedGroup;
         public Group SelectedGroup 
         { 
             get => _SelectedGroup; 
