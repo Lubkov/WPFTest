@@ -45,12 +45,50 @@
                 <ProgressBar Width="128" Height="14" Value="30"/>
             </StatusBarItem>
         </StatusBar>
-        <TabControl>
+        <TabControl>            
+            <TabItem>                
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical">                        
+                        <fa:ImageAwesome Icon="CreditCard" Height="32" Margin="2" Foreground="DarkRed"/>
+                        <TextBlock Text="Список карт" Margin="5 2 5 2"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Header="Группы карт" Grid.Column="0">
+                        <ListBox ItemsSource="{Binding Groups}" DisplayMemberPath="Name"/>
+                    </GroupBox>
+                    <GroupBox Header="Список карт" Grid.Column="1">
+                        <DataGrid></DataGrid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical">
+                        <fa:ImageAwesome Icon="Desktop" Height="32" Margin="2" Foreground="DarkRed"/>
+                        <TextBlock Text="Станции R-Keeper" Margin="5 2 5 2"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical">
+                        <fa:ImageAwesome Icon="Vcard" Height="32" Margin="2" Foreground="DarkRed"/>
+                        <TextBlock Text="Пользователи системы" Margin="5 2 5 2"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Vertical">
                         <fa:ImageAwesome Icon="FilePictureOutline" Height="32" Margin="2" Foreground="DarkRed"/>
-                        <TextBlock Text="Вкладка 1" Margin="5 2 5 2"/>                        
+                        <TextBlock Text="Вкладка 1" Margin="5 2 5 2"/>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid>
@@ -76,30 +114,6 @@
                         </Ellipse.InputBindings>
                     </Ellipse>
                 </Grid>
-            </TabItem>
-            <TabItem>                
-                <TabItem.Header>
-                    <StackPanel Orientation="Vertical">                        
-                        <fa:ImageAwesome Icon="CreditCard" Height="32" Margin="2" Foreground="DarkRed"/>
-                        <TextBlock Text="Список карт" Margin="5 2 5 2"/>
-                    </StackPanel>
-                </TabItem.Header>                
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Vertical">
-                        <fa:ImageAwesome Icon="Desktop" Height="32" Margin="2" Foreground="DarkRed"/>
-                        <TextBlock Text="Станции R-Keeper" Margin="5 2 5 2"/>
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Vertical">
-                        <fa:ImageAwesome Icon="Vcard" Height="32" Margin="2" Foreground="DarkRed"/>
-                        <TextBlock Text="Пользователи системы" Margin="5 2 5 2"/>
-                    </StackPanel>
-                </TabItem.Header>
             </TabItem>
         </TabControl>
     </DockPanel>
