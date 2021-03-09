@@ -7,6 +7,7 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:cmd="clr-namespace:WPFTest.Infrastructure.Commands"
         xmlns:vm="clr-namespace:WPFTest.ViewModels"
+        xmlns:model="clr-namespace:WPFTest.Models"
         mc:Ignorable="d"
         Title="{Binding Title}" 
         Height="450" 
@@ -61,19 +62,29 @@
                     </Grid.ColumnDefinitions>
 
                     <GroupBox Grid.Column="0" Header="Группы карт">
-                        <ListBox ItemsSource="{Binding Groups}" SelectedIndex="0"
+                        <ListBox ItemsSource="{Binding Groups}"
                                  DisplayMemberPath="Name" 
-                                 SelectedItem="{Binding SelectedGroup}"/>
+                                 SelectedItem="{Binding SelectedGroup}"
+                                 SelectedIndex="0"/>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Список карт', TargetNullValue='Группа не выбрана'}">
                         <DataGrid ItemsSource="{Binding SelectedGroup.Customers}" 
                                   AutoGenerateColumns="False"
-                                  IsReadOnly="True">
+                                  IsReadOnly="True"
+                                  GridLinesVisibility="Vertical"
+                                  AlternatingRowBackground="LightBlue">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
                                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
                                 <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
-                                <DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthdate, StringFormat='dd.MM.yyyy'}"/>
+                                <!--<DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthdate, StringFormat='dd.MM.yyyy'}"/>-->
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="model:Customer">
+                                            <DatePicker SelectedDate="{Binding Birthdate}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Номер телефона" Binding="{Binding PhoneNum}"/>
                                 <!--<DataGridTextColumn Header="Группа" Binding="{Binding DataContext.SelectedGroup.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
                             </DataGrid.Columns>
