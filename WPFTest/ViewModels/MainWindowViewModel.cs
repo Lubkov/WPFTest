@@ -17,6 +17,17 @@ namespace WPFTest.ViewModels
 
         public ObservableCollection<Group> Groups { get; }
 
+        #region Выбранная группа карт
+
+        public Group _SelectedGroup;
+        public Group SelectedGroup 
+        { 
+            get => _SelectedGroup; 
+            set => Set(ref _SelectedGroup, value); 
+        }
+
+        #endregion
+
         #endregion
 
         #region Заголовок окна

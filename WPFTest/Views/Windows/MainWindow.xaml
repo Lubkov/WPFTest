@@ -60,10 +60,12 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <GroupBox Header="Группы карт" Grid.Column="0">
-                        <ListBox ItemsSource="{Binding Groups}" DisplayMemberPath="Name"/>
+                    <GroupBox Grid.Column="0" Header="Группы карт">
+                        <ListBox ItemsSource="{Binding Groups}" 
+                                 DisplayMemberPath="Name" 
+                                 SelectedItem="{Binding SelectedGroup}"/>
                     </GroupBox>
-                    <GroupBox Header="Список карт" Grid.Column="1">
+                    <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Список карт', TargetNullValue='Группа не выбрана'}">
                         <DataGrid></DataGrid>
                     </GroupBox>
                 </Grid>
