@@ -63,17 +63,22 @@
                     
                     <StackPanel Grid.Column="0" Orientation="Vertical">
                         <StackPanel.Resources>
-                            <CollectionViewSource x:Key="GroupsCollection" Source="{Binding Groups}"/>                            
+                            <CollectionViewSource x:Key="GroupsCollection" 
+                                                  Source="{Binding Groups}"
+                                                  Filter="CollectionViewSource_Filter"/>                            
                         </StackPanel.Resources>
                         
                         <StackPanel Orientation="Vertical" Background="DarkRed" >
-                            <TextBlock Text="Группы карт" Foreground="White" Margin="10 2 10 4" FontSize="14" />    
+                            <TextBlock Text="Группы карт" Foreground="White" Margin="10 2 10 4" FontSize="14"/>    
                         </StackPanel>
                         
                         <ToolBar Height="32" >
                             <DockPanel Margin="2,1,1,0">
                                 <!--<fa:ImageAwesome Height="16" Icon="Search" Margin="5"/>-->
-                                <TextBox Width="100" Padding="3" VerticalAlignment="Center"/>
+                                <TextBox Width="100" Padding="3" 
+                                         VerticalAlignment="Center"
+                                         Name="GroupNameFilterText"
+                                         TextChanged="GroupNameFilterText_TextChanged"/>
                             </DockPanel>
                             <Separator/>
                             <Button Padding="0" Margin="0" Command="{Binding CreateGroupCommand}">
@@ -89,7 +94,15 @@
                             </Button>
                         </ToolBar>
                         <ListBox ItemsSource="{Binding Source={StaticResource GroupsCollection}}" SelectedIndex="0"                              
-                                    SelectedItem="{Binding SelectedGroup}">
+                                    SelectedItem="{Binding SelectedGroup}"
+                                 VirtualizingPanel.IsContainerVirtualizable="True"
+                                 VirtualizingPanel.IsVirtualizing="True"
+                                 VirtualizingPanel.VirtualizationMode="Standard">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="model:Group">
                                     <StackPanel Orientation="Horizontal">
