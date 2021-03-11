@@ -22,7 +22,7 @@
         <KeyBinding Modifiers="Alt" Key="X" Command="{StaticResource CloseApplicationCommand}"/>
     </Window.InputBindings>
     
-    <DockPanel>
+    <DockPanel>        
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <!--<MenuItem Header="Выход" Command="{Binding CloseApplicationCommand}"/>-->
@@ -60,31 +60,55 @@
                         <ColumnDefinition Width="250"/>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-
-                    <GroupBox Grid.Column="0" Header="Группы карт">                        
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Width="32" Height="32" Margin="0" Padding="0" Command="{Binding CreateGroupCommand}">
-                                    <fa:ImageAwesome Icon="Plus" Height="24" Margin="2" Foreground="White"/>                                                                        
-                                </Button>
-                                <Button Width="32" Height="32" Margin="10,0,0,0" Padding="0" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding SelectedGroup}">
-                                    <fa:ImageAwesome Icon="Remove" Height="24" Margin="2" Foreground="White"/>
-                                </Button>
-                            </StackPanel>
-                            <ListBox ItemsSource="{Binding Groups}" SelectedIndex="0"                              
-                                     SelectedItem="{Binding SelectedGroup}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="model:Group">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}"/>
-                                            <TextBlock Text="{Binding Customers.Count, StringFormat=({0})}" Margin="10 0 0 0"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>    
-                        </StackPanel>                        
-                    </GroupBox>
-                    <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Список карт', TargetNullValue='Группа не выбрана'}">
+                    
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <StackPanel.Resources>
+                            <CollectionViewSource x:Key="GroupsCollection" Source="{Binding Groups}"/>                            
+                        </StackPanel.Resources>
+                        
+                        <StackPanel Orientation="Vertical" Background="DarkRed" >
+                            <TextBlock Text="Группы карт" Foreground="White" Margin="10 2 10 4" FontSize="14" />    
+                        </StackPanel>
+                        
+                        <ToolBar Height="32" >
+                            <DockPanel Margin="2,1,1,0">
+                                <!--<fa:ImageAwesome Height="16" Icon="Search" Margin="5"/>-->
+                                <TextBox Width="100" Padding="3" VerticalAlignment="Center"/>
+                            </DockPanel>
+                            <Separator/>
+                            <Button Padding="0" Margin="0" Command="{Binding CreateGroupCommand}">
+                                <Image Source="/Resources/Ico/New-file-24.png" />
+                            </Button>
+                            <Separator/>
+                            <Button Padding="0" Margin="5,0,0,0 ">
+                                <Image Source="/Resources/Ico/Edit-file-24.png" />
+                            </Button>
+                            <Separator/>
+                            <Button Padding="0" Margin="5 0 0 0 " Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding SelectedGroup}">
+                                <Image Source="/Resources/Ico/Delete-file-24.png" />
+                            </Button>
+                        </ToolBar>
+                        <ListBox ItemsSource="{Binding Source={StaticResource GroupsCollection}}" SelectedIndex="0"                              
+                                    SelectedItem="{Binding SelectedGroup}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="model:Group">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Customers.Count, StringFormat=({0})}" Margin="10 0 0 0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>    
+                    </StackPanel>                        
+                   
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <StackPanel Orientation="Vertical" Background="DarkRed" >
+                            <TextBlock Text="{Binding SelectedGroup.Name, FallbackValue='Список карт', TargetNullValue='Группа не выбрана'}" Foreground="White" Margin="10 2 10 4" FontSize="14" />
+                        </StackPanel>
+                        <StackPanel Margin="0,3" Orientation="Horizontal">
+                            <fa:ImageAwesome Height="16" Icon="Search" Margin="5"/>
+                            <TextBox Width="160" Margin="0 0 5 0"/>
+                        </StackPanel>
                         <DataGrid ItemsSource="{Binding SelectedGroup.Customers}" 
                                   AutoGenerateColumns="False"
                                   CanUserAddRows="False"
@@ -103,7 +127,7 @@
                                     </DataGridTemplateColumn.CellTemplate>-->
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate DataType="model:Customer">
-                                            <TextBlock Text="{Binding Birthdate, StringFormat='dd:MM:yyyy'}"/>
+                                            <TextBlock Text="{Binding Birthdate, StringFormat='dd.MM.yyyy'}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -117,7 +141,7 @@
                             </DataGrid.Columns>
                             
                         </DataGrid>
-                    </GroupBox>
+                    </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem>

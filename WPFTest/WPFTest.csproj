@@ -116,6 +116,11 @@
     <Folder Include="Data\" />
     <Folder Include="Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Ico\Delete-file-24.png" />
+    <Resource Include="Resources\Ico\Edit-file-24.png" />
+    <Resource Include="Resources\Ico\New-file-24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
