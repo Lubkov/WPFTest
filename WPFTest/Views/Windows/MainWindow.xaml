@@ -120,13 +120,17 @@
                         </StackPanel>
                         <StackPanel Margin="0,3" Orientation="Horizontal">
                             <fa:ImageAwesome Height="16" Icon="Search" Margin="5"/>
-                            <TextBox Width="160" Margin="0 0 5 0"/>
+                            <TextBox Text="{Binding CustomerFilterText, UpdateSourceTrigger=PropertyChanged}" 
+                                     Width="160" Margin="0 0 5 0"/>
                         </StackPanel>
-                        <DataGrid ItemsSource="{Binding SelectedGroup.Customers}" 
+                        <DataGrid ItemsSource="{Binding SelectedGroupCustomers}" 
                                   AutoGenerateColumns="False"
                                   CanUserAddRows="False"
                                   GridLinesVisibility="Vertical"
                                   AlternatingRowBackground="LightBlue">
+                            <!--<DataGrid.GroupStyle>
+                                <GroupStyle/>
+                            </DataGrid.GroupStyle>-->
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}" IsReadOnly="True"/>

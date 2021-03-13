@@ -1,9 +1,12 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using WPFTest.Infrastructure.Commands;
 using WPFTest.Models;
@@ -22,9 +25,69 @@ namespace WPFTest.ViewModels
         private Group _SelectedGroup;
         public Group SelectedGroup 
         { 
-            get => _SelectedGroup; 
-            set => Set(ref _SelectedGroup, value); 
+            get => _SelectedGroup;
+            set
+            {
+                if (Set(ref _SelectedGroup, value))
+                {
+                    _SelectedGroupCustomers.Source = _SelectedGroup?.Customers;
+                    OnPropertyChanged(nameof(SelectedGroupCustomers));
+                }
+            }
         }
+
+        #endregion
+
+        #region CustomerFilterText
+
+        private string _CustomerFilterText;
+
+        public string CustomerFilterText
+        {
+            get => _CustomerFilterText;
+            set
+            {
+                if (Set(ref _CustomerFilterText, value))
+                {
+                    _SelectedGroupCustomers.View.Refresh();
+                }
+            }
+        }
+
+        #endregion
+
+        #region SelectedGroupCustomers
+
+        private readonly CollectionViewSource _SelectedGroupCustomers = new CollectionViewSource();
+                
+        private void OnCustomerFitered(object sender, FilterEventArgs e)
+        {
+            if (!(e.Item is Customer customer))
+            {
+                e.Accepted = false;
+                return;
+            }
+
+            string filter = _CustomerFilterText;
+            if (string.IsNullOrWhiteSpace(filter))
+            {
+                return;
+            }
+
+            if (customer.Name is null || customer.Surname is null || customer.Patronymic is null)
+            {
+                e.Accepted = false;
+                return;
+            }
+
+            if (customer.Name.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0) return;
+            if (customer.Surname.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0) return;
+            if (customer.Patronymic.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0) return;
+
+            e.Accepted = false;
+        }
+
+        public ICollectionView SelectedGroupCustomers => _SelectedGroupCustomers?.View;               
 
         #endregion
 
@@ -128,6 +191,12 @@ namespace WPFTest.ViewModels
                 Customers = new ObservableCollection<Customer>(customers)
             });
             Groups = new ObservableCollection<Group>(groups);
+
+
+            _SelectedGroupCustomers.Filter += OnCustomerFitered;
+            //_SelectedGroupCustomers.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
+            //_SelectedGroupCustomers.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
         }
+
     }
 }
